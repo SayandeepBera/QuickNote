@@ -4,13 +4,14 @@ const User=require('../models/User');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchUser');
 
 const JWT_SECRET = 'Harryisgoodboy';
 
-// Creating a user using POST "/api/auth/createuser". Doesn't require auth
+// ROUTE 1 : Creating a user using POST "/api/auth/createuser". Doesn't require login
 router.post('/createuser', [
     // name must be at least 3 char long
-    body('name','Enter the valid name').isLength({ min: 3 }),
+    body('name','Name must be at least 3 char long').isLength({ min: 3 }),
 
     // username must be an email
     body('email','Enter the valid email').isEmail(),
@@ -49,16 +50,77 @@ router.post('/createuser', [
                 id : user.id
             }
         }
+
+        // Send token after store the information into the database
         const authToken = jwt.sign(data, JWT_SECRET);
 
         res.json({authToken});
-        // res.json(user);
 
-    }catch{
+    }catch(errors){
         console.error(errors.message);
         res.status(500).send("Internal Server Error");
     }
 
+})
+
+// ROUTE 2 : Creating a user using POST "/api/auth/login".
+router.post('/login', [
+    // username must be an email
+    body('email','Enter the valid email').isEmail(),
+
+    // password must be at least 5 chars long
+    body('password','password must be at least 5 chars long').exists()
+
+], async(req, res)=>{
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email,password} = req.body;
+
+    try{
+        // Check if user with this email already exists or not
+        let existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(400).json({ error: "Please try to login with correct credential" });
+        }
+
+        // Check if user with this password already exists or not
+        let existingPassword = await bcrypt.compare(password, existingUser.password);
+        if (!existingPassword) {
+            return res.status(400).json({ error: "Please try to login with correct credential" });
+        }
+
+        // JWTs enable secure authentication and authorization by providing a way to verify user identity and grant access to specific resources. 
+        const data={
+            user:{
+                id : existingUser.id
+            }
+        }
+
+        // If user exist then send the token
+        const authToken = jwt.sign(data, JWT_SECRET);
+
+        res.json({authToken});
+        
+    }catch(errors){
+        console.error(errors.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+// ROUTE 3 : Creating a user using POST "/api/auth/getuser".
+router.post('/getuser', fetchuser, async(req, res)=>{
+    try {
+        const userId=req.user.id;
+        let existUserDetails = await User.findById(userId).select("-password");
+        res.send(existUserDetails);
+    } catch (errors) {
+        console.error(errors.message);
+        res.status(500).send("Internal Server Error");
+    }
 })
 
 module.exports = router
