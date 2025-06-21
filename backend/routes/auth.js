@@ -17,7 +17,7 @@ router.post('/createuser', [
     body('email','Enter the valid email').isEmail(),
 
     // password must be at least 5 chars long
-    body('password','password must be at least 5 chars long').isLength({ min: 5 })
+    body('password','Password must be at least 5 chars long').isLength({ min: 5 })
 
 ], async(req, res)=>{
     // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -51,7 +51,7 @@ router.post('/createuser', [
             }
         }
 
-        // Send token after store the information into the database
+        // Send token after store the information into the database with JWT_SECRET
         const authToken = jwt.sign(data, JWT_SECRET);
 
         res.json({authToken});
@@ -111,7 +111,7 @@ router.post('/login', [
     }
 })
 
-// ROUTE 3 : Creating a user using POST "/api/auth/getuser".
+// ROUTE 3 : Get a user details using POST "/api/auth/getuser".
 router.post('/getuser', fetchuser, async(req, res)=>{
     try {
         const userId=req.user.id;

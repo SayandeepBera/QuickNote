@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'Harryisgoodboy';
 
 // To fetch the user details through the token
-fetchuser = (req,res,next)=>{
+const fetchuser = (req,res,next)=>{
     const token = req.header('auth-token');
     if(!token){
         res.status(401).send({error : "Please authenticate using valid token"});
