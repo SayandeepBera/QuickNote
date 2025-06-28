@@ -33,8 +33,8 @@ const Navbar = () => {
                             {name : "About", path : "/about"}
 
                         ].map((item)=>(
-                            <li>
-                                <Link className={`nav-link fw-semibold ${location.pathname === item.name ? "active fs-5" : ""}`} key={item.name} aria-current="page" to={item.path}>
+                            <li key={item.name}>
+                                <Link className={`nav-link fw-semibold ${location.pathname === item.name ? "active fs-5" : ""}`} aria-current="page" to={item.path}>
                                     {item.name}
                                 </Link>
                             </li>
@@ -42,8 +42,8 @@ const Navbar = () => {
                         
                     </ul>
                     <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button className="btn btn-outline-success" type="submit">Search</button>
+                        <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
+                        <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
                     </form>
                 </div>
                 
