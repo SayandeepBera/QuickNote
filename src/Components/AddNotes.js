@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import notesContext from '../Context/Notes/notesContext';
 
-const AddNotes = () => {
+const AddNotes = (props) => {
     const context = useContext(notesContext);
     const { addNotes } = context;
     const [note, setNotes] = useState({title : "", description : "", tag : ""});
@@ -13,6 +13,9 @@ const AddNotes = () => {
 
         // Reset to empty form
         setNotes({title : "", description : "", tag : ""});
+
+        // Show alert message for succesfully add a note
+        props.showAlert("Successfully added the note", "success");
     }
 
     // when write in title, description and tag field

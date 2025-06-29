@@ -3,7 +3,7 @@ import notesContext from '../Context/Notes/notesContext';
 import NotesItem from "./NotesItem";
 import AddNotes from "./AddNotes";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(notesContext);
   const { notes, showNotes, editNotes } = context;
   const [note, setNotes] = useState({_eid : "", etitle : "", edescription : "", etag : ""});
@@ -20,6 +20,9 @@ const Notes = () => {
     const handleUpdateNotes = (e)=>{
       editNotes(note._eid, note.etitle, note.edescription, note.etag);
       closeRef.current.click();
+
+      // Show alert message for succesfully delete a note
+      props.showAlert("Successfully update the note", "success");
     }
 
     // when write in title, description and tag field
@@ -34,7 +37,7 @@ const Notes = () => {
 
   return (
     <>
-      <AddNotes/>
+      <AddNotes showAlert={props.showAlert} />
 
       {/* Button trigger modal */}
         <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -76,7 +79,7 @@ const Notes = () => {
       <div className="row my-3">
         <h1 className="text-center">Show Your Notes</h1>
           {notes.map((note)=>{
-            return <NotesItem key={note._id} note={note} updateNotes = {updateNotes} />;
+            return <NotesItem key={note._id} note={note} updateNotes = {updateNotes} showAlert={props.showAlert} />;
           })}
       </div>
     </>

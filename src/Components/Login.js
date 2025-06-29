@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   const [credential, setCredential] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -28,13 +28,16 @@ const Login = () => {
 
         // When login is successful then navigate to home page
         navigate('/');
+
+        // show alert message after succesful login of user
+        props.showAlert("Login Successfully", "success");
+
       } else {
-        alert("Invalide Credential");
+        props.showAlert("Invalide Credential", "danger")
       }
       
     } catch (error) {
-      console.error("Signup error:", error);
-      alert("Something went wrong. Please try again.");
+      props.showAlert("Something went wrong in Log in. Please try again.", "danger");
     }
 
   }

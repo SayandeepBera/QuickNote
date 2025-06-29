@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
   const [credential, setCredential] = useState({ name: "", email: "", password: "", cpassword: "" });
   const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ const Signup = () => {
 
     // When password is not match with confirm password
     if (credential.password !== credential.cpassword) {
-      alert("Passwords do not match");
+      props.showAlert("Passwords do not match", "danger")
       return;
     }
 
@@ -36,13 +36,15 @@ const Signup = () => {
         // When login is successful then navigate to home page
         navigate('/');
 
+        // show alert message after succesful login of user
+        props.showAlert("Account is created Successfully", "success");
+
       } else {
-        alert("A user with this email already exists.");
+        props.showAlert("A user with this email already exists.", "danger")
       }
 
     } catch (error) {
-      console.error("Signup error:", error);
-      alert("Something went wrong. Please try again.");
+        props.showAlert("Something went wrong in Sign up. Please try again.", "danger");
     }
 
   }
@@ -70,7 +72,7 @@ const Signup = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Confirm Password</label>
-          <input type="password" className="form-control" name="cpassword" autoComplete="current-password" id="cpassword" required onChange={onChange} />
+          <input type="password" className="form-control" name="cpassword" autoComplete="current-password" id="cpassword" minLength={5} required onChange={onChange} />
         </div>
 
         <button type="submit" className="btn btn-primary">Sign up</button>
