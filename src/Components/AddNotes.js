@@ -1,21 +1,28 @@
 import React, { useState, useContext } from 'react'
 import notesContext from '../Context/Notes/notesContext';
+import { useNavigate } from 'react-router-dom';
 
 const AddNotes = (props) => {
     const context = useContext(notesContext);
     const { addNotes } = context;
     const [note, setNotes] = useState({title : "", description : "", tag : ""});
+    const navigate = useNavigate(null);
 
     // When click the add note button
-    const handleClick = (e)=>{
+    const handleAddNote = (e)=>{
         e.preventDefault();
-        addNotes(note.title, note.description, note.tag);
+      
+        if(localStorage.getItem('token') !== null){
+          addNotes(note.title, note.description, note.tag);
 
-        // Reset to empty form
-        setNotes({title : "", description : "", tag : ""});
+          // Reset to empty form
+          setNotes({title : "", description : "", tag : ""});
 
-        // Show alert message for succesfully add a note
-        props.showAlert("Successfully added the note", "success");
+          // Show alert message for succesfully add a note
+          props.showAlert("Successfully added the note", "success");
+        }else{
+          navigate('/login');
+        }
     }
 
     // when write in title, description and tag field
@@ -24,9 +31,9 @@ const AddNotes = (props) => {
     }
 
   return (
-    <div className='container mt-5'>
+    <div className='container'>
       {/* Add your notes section */}
-      <h1 className="text-center">Add Your Notes</h1>
+      <h1 className="text-center" style={{fontFamily : "fangsong"}}>Add Your Notes</h1>
       <div className="mb-3">
         <label htmlFor="exampleFormControlInput1" className="form-label">Title</label>
         <input type="text" className="form-control" id="title" name="title" value={note.title} minLength={3} required placeholder="Write your note title(Title must be at least 3 char long)" onChange={onChange} />
@@ -39,7 +46,7 @@ const AddNotes = (props) => {
         <label htmlFor="exampleFormControlInput1" className="form-label">Tag</label>
         <input type="text" className="form-control" id="tag" name="tag" value={note.tag} placeholder="Write your note tag" onChange={onChange} />
       </div>
-      <button disabled={note.title.length < 3 || note.description.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>Add Notes</button>
+      <button disabled={note.title.length < 3 || note.description.length < 5} type="button" className="btn btn-primary" onClick={handleAddNote}>Add Notes</button>
     </div>
   )
 }

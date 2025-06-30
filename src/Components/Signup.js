@@ -29,15 +29,15 @@ const Signup = (props) => {
       const token = await response.json();
       console.log(token);
 
-      if (token.success === true) {
+      if (token.success) {
         // localStorage is a Web API that lets you store data in the browser
-        localStorage.setItem('token', token.authtoken);
-
-        // When login is successful then navigate to home page
-        navigate('/');
+        localStorage.setItem('token', token.authToken);
 
         // show alert message after succesful login of user
         props.showAlert("Account is created Successfully", "success");
+
+        // When login is successful then navigate to home page
+        navigate('/');
 
       } else {
         props.showAlert("A user with this email already exists.", "danger")
@@ -56,6 +56,7 @@ const Signup = (props) => {
 
   return (
     <div className="container">
+      <h2>Create an account to use iNotebook</h2>
       <form onSubmit={handleSignup}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Name</label>

@@ -22,15 +22,15 @@ const Login = (props) => {
       const token = await response.json();
       console.log(token);
 
-      if (token.success === true) {
+      if (token.success) {
         // localStorage is a Web API that lets you store data in the browser
-        localStorage.setItem('token', token.authtoken);
-
-        // When login is successful then navigate to home page
-        navigate('/');
+        localStorage.setItem('token', token.authToken);
 
         // show alert message after succesful login of user
         props.showAlert("Login Successfully", "success");
+
+        // When login is successful then navigate to home page
+        navigate('/');
 
       } else {
         props.showAlert("Invalide Credential", "danger")
@@ -49,6 +49,7 @@ const Login = (props) => {
 
   return (
     <div className="container">
+      <h2>Login to Continue to use iNotebook</h2>
       <form onSubmit={handleLogin}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email address</label>

@@ -1,8 +1,21 @@
-import React from 'react'
-import { Link,useLocation } from "react-router-dom";
+import React, { useContext } from 'react'
+import { Link,useLocation, useNavigate } from "react-router-dom";
+import notesContext from '../Context/Notes/notesContext';
 
 const Navbar = () => {
     const location = useLocation(); // to highlight the active link
+    const navigate = useNavigate(null);
+    const context = useContext(notesContext);
+    const {clearNotes} = context;
+    
+    const handleLogout = ()=>{
+        localStorage.removeItem('token');
+        clearNotes();
+        
+        // After logout navigate to home page
+        navigate('/');
+    }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-black">
         <div className="container-fluid">
@@ -41,10 +54,10 @@ const Navbar = () => {
                         ))}
                         
                     </ul>
-                    <form className="d-flex" role="search">
+                    {!localStorage.getItem('token') ? <form className="d-flex" role="search">
                         <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
                         <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
-                    </form>
+                    </form> : <button className="btn btn-primary" onClick={handleLogout}>Log out</button>}
                 </div>
                 
                 
