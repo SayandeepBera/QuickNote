@@ -5,17 +5,21 @@ const NotesState = (props) => {
   const localhost = "http://localhost:5000";
 
   const allNotes = [];
-  const defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg2MWJlZjE3OTQzN2NmZjAwMzkzOTYzIn0sImlhdCI6MTc1MTIzNjMzN30.SDGVTLvs3qKMx2XzjTep3LXZhHDx1CV-prVQmBDPmwg";
   const [notes, setNotes] = useState(allNotes);
 
   // Function 1 : Show the notes
   const showNotes = async ()=>{
+    // When token is not present then not required to API call
+    if(!localStorage.getItem('token')){
+      return;
+    }
+
     // API Call to fetch all notes
     const response = await fetch(`${localhost}/api/notes/fetchallnotes`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": (localStorage.getItem('token') === null ? defaultToken : localStorage.getItem('token'))
+        "auth-token": localStorage.getItem('token')
       },
       
     });
@@ -31,7 +35,7 @@ const NotesState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": (localStorage.getItem('token') === null ? defaultToken : localStorage.getItem('token'))
+        "auth-token": localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag }),
       
@@ -50,7 +54,7 @@ const NotesState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": (localStorage.getItem('token') === null ? defaultToken : localStorage.getItem('token'))
+        "auth-token": localStorage.getItem('token')
       },
       
     });
@@ -73,7 +77,7 @@ const NotesState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": (localStorage.getItem('token') === null ? defaultToken : localStorage.getItem('token'))
+        "auth-token": localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag }),
       
@@ -110,7 +114,7 @@ const NotesState = (props) => {
 
   return (
     // value={{state : state, update : update}}
-    <NotesContext.Provider value={{ notes, addNotes, deleteNotes, editNotes, showNotes, clearNotes, defaultToken }}>
+    <NotesContext.Provider value={{ notes, addNotes, deleteNotes, editNotes, showNotes, clearNotes }}>
       {props.children}
     </NotesContext.Provider>
   );

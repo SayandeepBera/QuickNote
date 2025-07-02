@@ -15,7 +15,7 @@ const Notes = (props) => {
     if (localStorage.getItem('token') !== null) {
       showNotes();
     } else {
-      <p>No Notes is present</p>
+      <p>QuickNote is waiting for your first thought. Go ahead, add a note!</p>
     }
 
     // eslint-disable-next-line
@@ -27,7 +27,7 @@ const Notes = (props) => {
     closeRef.current.click();
 
     // Show alert message for succesfully delete a note
-    props.showAlert("Successfully update the note", "success");
+    props.showAlert("Note updated successfully.", "success");
   }
 
   // when write in title, description and tag field
@@ -41,7 +41,7 @@ const Notes = (props) => {
   }
 
   return (
-    <>
+    <div className="mb-5">
       {/* Button trigger modal */}
       <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
@@ -83,7 +83,7 @@ const Notes = (props) => {
         <h1 className="text-center" style={{fontFamily : "fangsong"}}>Show Your Notes</h1>
         
         {notes.length === 0 ? (
-          "No Notes is present"
+          <p>"QuickNote is waiting for your first thought. Go ahead, add a note!"</p>
         ) : (
           notes.map((note) => (
             <NotesItem key={note._id} note={note} updateNotes={updateNotes} showAlert={props.showAlert} />
@@ -91,7 +91,7 @@ const Notes = (props) => {
         )}
 
       </div>
-    </>
+    </div>
   );
 };
 

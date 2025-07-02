@@ -1,0 +1,40 @@
+/* for desktop */
+@media (min-width: 768px) {
+    .nav-link {
+        position: relative;
+        text-decoration: none;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background-color: red;
+        transition: width 0.5s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    #addNote {
+        background-image: url('./Components/images/img4.jpg');
+        background-size: cover;
+    }
+}
+
+/* Global styling for mobile — no underline effect */
+@media (max-width: 767px) {
+    .nav-link {
+        color: white;
+    }
+
+    #addNote {
+        background-image: url('./Components/images/img1.jpg');
+        background-size: cover;
+    }
+}
