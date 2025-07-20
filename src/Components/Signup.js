@@ -55,7 +55,7 @@ const Signup = (props) => {
   }
 
   return (
-    <div className="container col-md-8 rounded-3 mb-5" style={{marginTop : "150px", background : "rgb(234 234 234)", padding : "15px"}}>
+    <div className="container col-md-8 rounded-4 mb-5" style={{marginTop : "150px", background : "rgb(234 234 234)", padding : "15px 25px"}}>
       <h2 className="text-center mb-5 fw-semibold" style={{fontFamily : "fangsong"}}>Create your account to get started with QuickNote</h2>
       <form onSubmit={handleSignup}>
         <div className="mb-3">

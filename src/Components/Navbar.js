@@ -56,8 +56,8 @@ const Navbar = () => {
                         
                     </ul>
                     {!localStorage.getItem('token') ? <form className="d-flex" role="search">
-                        <Link className="btn btn-warning mx-3 fw-semibold" style={{fontSize : "18px", color : "white"}} to="/login" role="button">Log in</Link>
-                    </form> : <button className="btn btn-warning mx-3 fw-semibold" style={{fontSize : "18px", color : "white"}} onClick={handleLogout}>Log out</button>}
+                        <Link className="btn btn-warning mx-3 fw-semibold" style={{fontSize : "18px", color : "white"}} to="/login" role="button">Sign in</Link>
+                    </form> : <button className="btn btn-warning mx-3 fw-semibold" style={{fontSize : "18px", color : "white"}} onClick={handleLogout}>Sign out</button>}
                 </div>
                 
                 

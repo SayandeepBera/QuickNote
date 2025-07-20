@@ -31,7 +31,7 @@ const AddNotes = (props) => {
     }
 
   return (
-    <div className='container rounded-3' id="addNote" style={{marginTop : "150px", padding : "10px 20px 20px 20px"}}>
+    <div className='container rounded-3' id="addNote" style={{marginTop : "150px", padding : "15px 45px"}}>
       {/* Add your notes section */}
       <h1 className="text-center" style={{fontFamily : "fangsong"}}>Add Your Notes</h1>
       <div className="mb-3">

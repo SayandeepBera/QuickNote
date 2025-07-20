@@ -48,7 +48,7 @@ const Login = (props) => {
   }
 
   return (
-    <div className="container col-md-8 rounded-3" style={{marginTop : "150px", background : "rgb(234 234 234)", padding : "15px"}}>
+    <div className="container col-md-8 rounded-4" style={{marginTop : "150px", background : "rgb(234 234 234)", padding : "15px 25px"}}>
       <h2 className="text-center mb-5 fw-semibold" style={{fontFamily : "fangsong"}}>Please log in to continue using QuickNote</h2>
       <form onSubmit={handleLogin}>
         <div className="mb-3">
@@ -60,7 +60,7 @@ const Login = (props) => {
           <label htmlFor="password" className="form-label" style={{fontSize : "19px", fontFamily : "auto", fontWeight : "600"}}>Password</label>
           <input type="password" className="form-control" name="password" required value={credential.password} id="exampleInputPassword1" autoComplete="current-password" placeholder="Enter your password" onChange={onChange} />
         </div>
-        <button type="submit" className="btn btn-primary">Log in</button>
+        <button type="submit" className="btn btn-primary">Sign in</button>
         <p className="text-center mt-3">Not registered?
             <Link to="/signup" className="mx-2" style={{textDecoration : "none"}}>
                 Create an account
